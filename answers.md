@@ -32,7 +32,8 @@ $\int_x^{+\infty}(3x^3-3x^2+x)dx$
 $|\frac{3}{4}x^4-x^3+\frac{1}{2}x^2|_0^{+\infty}$
 
 
-
-
-
 ## Exercise 4
+
+a. An estimate for x(t1) is 121.97819386190054
+
+b. An estimate for v(t0) is 7.388569782843891
