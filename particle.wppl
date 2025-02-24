@@ -1,0 +1,24 @@
+const initialPos = gaussian({ mu: 0, sigma: 1 });
+const initialVelocity = uniform(1, 10);
+const initialAcceleration = uniform(1, 2);
+console.log(initialPos);
+console.log(initialVelocity);
+console.log(initialAcceleration);
+
+
+const velocity = function (t, h) {
+  if (t == 0) {
+    return initialVelocity;
+  }
+  return velocity(t - h, h) + h * initialAcceleration;
+}
+
+const position = function (t, h) {
+  console.log(t);
+  if (t == 0) {
+    return initialPos;
+  }
+  return position(t - h, h) + h * velocity(t, h);
+}
+
+expectation(Infer(function () { return position(1, 1) }));

@@ -1,0 +1,75 @@
+const getPlayerChoice = function (switchChoice, playerChoice, montyOpens) {
+  const choices = [0, 1, 2];
+
+  if (switchChoice) {
+    var remainingOption = filter(function (d) { return d !== playerChoice && d !== montyOpens }, choices);
+    return remainingOption[0];
+  } else {
+    return playerChoice;
+  }
+}
+
+
+const getMontyChoice = function (mode, playerChoice, carIndex) {
+  const choices = [0, 1, 2];
+  if (mode == 'uniform') {
+    return randomInteger(3);
+  }
+
+  var remaining = filter(function (d) { return d !== playerChoice && d !== carIndex }, choices);
+  if (mode == 'lowest') {
+    return remaining[0];
+  }
+
+  var random = randomInteger(remaining.length);
+  return remaining[random];
+}
+
+
+const monty = function (switchChoice, montymode) {
+  const carDoor = randomInteger(3);
+  const playerChoice = randomInteger(3);
+
+  const montyOpens = getMontyChoice(montymode, playerChoice, carDoor);
+  const finalChoice = getPlayerChoice(switchChoice, playerChoice, montyOpens);
+
+  return finalChoice === carDoor;
+}
+
+var runExperiment = function (args) {
+  return {
+    "expectation": expectation(Infer(function () {
+      return monty(args[0], args[1]);
+    })),
+    "choice": args[0],
+    "mode": args[1]
+  };
+}
+
+var runExperiments = function () {
+  var choices = [true, false];
+  var montyModes = ['random', 'lowest', 'uniform'];
+
+  var experimentCombinations = [
+    [choices[0], montyModes[0]],
+    [choices[0], montyModes[1]],
+    [choices[0], montyModes[2]],
+    [choices[1], montyModes[0]],
+    [choices[1], montyModes[1]],
+    [choices[1], montyModes[2]],
+  ];
+
+  var results = map(runExperiment, experimentCombinations);
+
+  mapIndexed(function (i, result) {
+    console.log('Experiment ' + (i + 1));
+    console.log('Choice: ' + experimentCombinations[i][0]);
+    console.log('Mode: ' + experimentCombinations[i][1]);
+    console.log('Expectation: ' + result.expectation);
+    console.log('---');
+  }, results);
+
+  return results;
+}
+
+runExperiments();

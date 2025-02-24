@@ -1,0 +1,35 @@
+const gamble = function (playerOneCoins, playerTwoCoins) {
+  if (playerOneCoins === 0) {
+    return false;
+  }
+  if (playerTwoCoins === 0) {
+    return true;
+  }
+  const winner = flip();
+  if (winner) {
+    return gamble(playerOneCoins, playerTwoCoins - 1);
+  }
+  return gamble(playerOneCoins - 1, playerTwoCoins);
+}
+
+const gambleR = function (playerOneCoins, playerTwoCoins, runs) {
+  if (playerOneCoins === 0) {
+    return runs;
+  }
+  if (playerTwoCoins === 0) {
+    return runs;
+  }
+  const winner = flip();
+  if (winner) {
+    return gambleR(playerOneCoins, playerTwoCoins - 1, runs + 1);
+  }
+  return gambleR(playerOneCoins - 1, playerTwoCoins, runs + 1);
+}
+
+
+var expectationCoins = expectation(Infer(function () { return gamble(13, 10) }));
+var expectedRuns = expectation(Infer(function () { return gambleR(5, 5, 0) }));
+
+console.log("a: minimum of 13 coins: " + expectationCoins * 100 + "%");
+
+console.log("b: expected runs: " + expectedRuns);
