@@ -63,4 +63,4 @@ const velocityInference = function () {
 };
 
 console.log("\nInferred initial velocity distribution given x(t1) = 150:");
-Infer({ method: 'MCMC', samples: 1000 }, velocityInference)
+expectation(Infer({ method: 'MCMC', samples: 1000 }, velocityInference))
