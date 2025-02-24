@@ -17,12 +17,14 @@ b. The expected number of rounds is 24.83
 
 ## Exercise 3
 
-a. expected value 3D10: 7.975
+a. We have created the code to calculate the expected value of a bonus throw, for example throwing 3 dices with 10 sides yields a 7.975 expectation in our program.
+
 b. The ratios are for n = [2, 3, 4]
 are: 0,69125, 0,774375, 0,824166875
 The rough pattern that we can recognize is that
 the ratios are increasing but the value of the increase of
 each step is roughly half of the previous increase.
+
 c.
 
 $\int_x^{+\infty}x(3x^2-3x+1)dx$
