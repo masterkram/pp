@@ -13,7 +13,6 @@ const inferDice = function (n, f) {
   return Infer(function () { return doThrow(n, f) });
 }
 
-
 console.log("expected value 3D10: " + expectation(inferDice(3, 10)));
 
 const calculateRatios = function () {

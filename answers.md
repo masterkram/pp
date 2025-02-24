@@ -12,27 +12,27 @@ the expectation is always 0.333.
 
 ## Exercise 2
 
-a. To ensure a win with above 70%, we must use 13 coins (73.8% probability of win)
-
-b. The expected number of rounds is 7.539
+a. To ensure a win with above 70%, we must use 23 coins (70.04% probability of win)
+b. The expected number of rounds is 24.83
 
 ## Exercise 3
 
 a. expected value 3D10: 7.975
-
 b. The ratios are for n = [2, 3, 4]
 are: 0,69125, 0,774375, 0,824166875
 The rough pattern that we can recognize is that
 the ratios are increasing but the value of the increase of
 each step is roughly half of the previous increase.
-
 c.
+
+$\int_x^{+\infty}x(3x^2-3x+1)dx$
+
+$\int_x^{+\infty}(3x^3-3x^2+x)dx$
+
+$|\frac{3}{4}x^4-x^3+\frac{1}{2}x^2|_0^{+\infty}$
+
 
 
 
 
 ## Exercise 4
-
-a. An estimate for x(t1) is 121.97819386190054
-
-b. An estimate for v(t0) is 7.388569782843891
