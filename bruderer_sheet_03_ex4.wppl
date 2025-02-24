@@ -1,24 +1,66 @@
-const initialPos = gaussian({ mu: 0, sigma: 1 });
-const initialVelocity = uniform(1, 10);
-const initialAcceleration = uniform(1, 2);
-console.log(initialPos);
-console.log(initialVelocity);
-console.log(initialAcceleration);
+// Define model as a function so we can use it for inference
+const model = function () {
+  // Initial conditions
+  const initialPos = gaussian({ mu: 0, sigma: 1 });
+  const initialVelocity = uniform({ a: 1, b: 10 });
+  const initialAcceleration = uniform({ a: 1, b: 2 });
 
+  // Helper function to calculate velocity at time t
+  const velocity = function (t, h) {
+    if (t === 0) {
+      return initialVelocity;
+    }
+    return velocity(t - h, h) + h * initialAcceleration;
+  };
 
-const velocity = function (t, h) {
-  if (t == 0) {
-    return initialVelocity;
-  }
-  return velocity(t - h, h) + h * initialAcceleration;
-}
+  // Helper function to calculate position at time t
+  const position = function (t, h) {
+    if (t === 0) {
+      return initialPos;
+    }
+    return position(t - h, h) + h * velocity(t - h, h);
+  };
 
-const position = function (t, h) {
-  console.log(t);
-  if (t == 0) {
-    return initialPos;
-  }
-  return position(t - h, h) + h * velocity(t, h);
-}
+  // Return final position at t1 = 10
+  return position(10, 1);
+};
 
-expectation(Infer(function () { return position(1, 1) }));
+// Part (a): Expected value of final position
+console.log("Expected final position:");
+console.log(expectation(Infer(model)));
+
+// Part (b): Inference for initial velocity given measurement
+const velocityInference = function () {
+  // Initial conditions
+  const initialPos = gaussian({ mu: 0, sigma: 1 });
+  const initialVelocity = uniform({ a: 1, b: 10 });
+  const initialAcceleration = uniform({ a: 1, b: 2 });
+
+  // Helper function to calculate velocity at time t
+  const velocity = function (t, h) {
+    if (t === 0) {
+      return initialVelocity;
+    }
+    return velocity(t - h, h) + h * initialAcceleration;
+  };
+
+  // Helper function to calculate position at time t
+  const position = function (t, h) {
+    if (t === 0) {
+      return initialPos;
+    }
+    return position(t - h, h) + h * velocity(t - h, h);
+  };
+
+  // Calculate final position
+  const finalPos = position(10, 1);
+
+  // Condition on noisy measurement
+  observe(Gaussian({ mu: finalPos, sigma: Math.sqrt(10) }), 150);
+
+  // Return initial velocity
+  return initialVelocity;
+};
+
+console.log("\nInferred initial velocity distribution given x(t1) = 150:");
+Infer({ method: 'MCMC', samples: 1000 }, velocityInference)
