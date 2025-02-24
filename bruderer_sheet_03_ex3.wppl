@@ -1,6 +1,5 @@
 const doThrow = function (n, f) {
   const diceResults = repeat(n, function () { randomInteger(f) + 1 });
-  console.log(diceResults);
   return reduce(function (acc, current) {
     if (acc < current) {
       return current;
@@ -18,7 +17,7 @@ const inferDice = function (n, f) {
 console.log("expected value 3D10: " + expectation(inferDice(3, 10)));
 
 const calculateRatios = function () {
-  const values = [2, 3, 4];
+  const values = [1, 2, 3, 4, 5];
   const mapped = map(function (element) { return expectation(inferDice(element, 20)) / 20 }, values);
   console.log("ratios:");
   console.log(mapped);
